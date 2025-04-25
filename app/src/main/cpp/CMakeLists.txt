@@ -6,11 +6,35 @@ set(jnilibs ${CMAKE_SOURCE_DIR}/../jniLibs)
 
 set(libname learn-ffmpeg)
 
-include_directories(include)
+include_directories(
+        include
+        glm
+        common
+        ${CMAKE_SOURCE_DIR}/recorder
+        ${CMAKE_SOURCE_DIR}/util
+        ${CMAKE_SOURCE_DIR}/player
+        ${CMAKE_SOURCE_DIR}/player/decoder
+        ${CMAKE_SOURCE_DIR}/player/render
+        ${CMAKE_SOURCE_DIR}/player/render/audio
+        ${CMAKE_SOURCE_DIR}/player/render/video
+        )
 
 link_directories(${jnilibs}/${ANDROID_ABI})
 
-file(GLOB src-files ${CMAKE_SOURCE_DIR}/*.cpp)
+file(GLOB src-files
+        ${CMAKE_SOURCE_DIR}/*.cpp
+        ${CMAKE_SOURCE_DIR}/util/*.cpp
+        ${CMAKE_SOURCE_DIR}/common/*.cpp
+        ${CMAKE_SOURCE_DIR}/player/*.cpp
+        ${CMAKE_SOURCE_DIR}/player/decoder/*.cpp
+        ${CMAKE_SOURCE_DIR}/player/render/video/*.cpp
+        ${CMAKE_SOURCE_DIR}/player/render/audio/*.cpp
+#        ${CMAKE_SOURCE_DIR}/recorder/SingleVideoRecorder.cpp
+#        ${CMAKE_SOURCE_DIR}/recorder/SingleAudioRecorder.cpp
+#        ${CMAKE_SOURCE_DIR}/recorder/MediaRecorderContext.cpp
+#        ${CMAKE_SOURCE_DIR}/recorder/GLCameraRender.cpp
+#        ${CMAKE_SOURCE_DIR}/recorder/MediaRecorder.cpp
+        )
 
 add_library(
         ${libname}

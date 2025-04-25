@@ -38,6 +38,29 @@ android {
             path file('src/main/cpp/CMakeLists.txt')
         }
     }
+
+    sourceSets {
+        main {
+            assets {
+                srcDirs 'src\\main\\assets'
+            }
+            jniLibs.srcDir 'libs'
+            jni.srcDirs = []    //disable automatic ndk-build
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+
+    buildFeatures {
+        dataBinding = true
+    }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {

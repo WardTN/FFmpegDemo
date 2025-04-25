@@ -1,6 +1,7 @@
 #include <jni.h>
 #include <string>
 #include <cstdio>
+#include "util/LogUtil.h"
 
 //由于 FFmpeg 库是 C 语言实现的，告诉编译器按照 C 的规则进行编译
 extern "C" {
@@ -14,12 +15,15 @@ extern "C" {
 }
 
 
+#include "VideoDecoder.h"
+#include "NativeRender.h"
+
+
 #ifdef __cplusplus
 extern "C" {
 #endif
-JNIEXPORT jstring JNICALL Java_com_wardtn_ffmpegdemo_TestActivity_stringFromJNI
-        (JNIEnv *env, jobject)
-{
+JNIEXPORT jstring JNICALL Java_com_wardtn_ffmpegdemo_media_FFMediaPlayer_stringFromJNI
+        (JNIEnv *env, jobject) {
     char strBuffer[1024 * 4] = {0};
     strcat(strBuffer, "libavcodec : ");
     strcat(strBuffer, AV_STRINGIFY(LIBAVCODEC_VERSION));
@@ -42,3 +46,29 @@ JNIEXPORT jstring JNICALL Java_com_wardtn_ffmpegdemo_TestActivity_stringFromJNI
 #ifdef __cplusplus
 }
 #endif
+
+
+VideoDecoder *m_VideoDecoder = nullptr;
+VideoRender *m_VideoRender = nullptr;
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_wardtn_ffmpegdemo_media_FFMediaPlayer_ANativeWindowInit(JNIEnv *env, jobject thiz, jstring jurl,
+                                                          jobject surface) {
+    // Init
+    const char *url = env->GetStringUTFChars(jurl, nullptr);
+    m_VideoDecoder = new VideoDecoder(const_cast<char *>(url));
+    m_VideoRender = new NativeRender(env, surface);
+    m_VideoDecoder->SetVideoRender(m_VideoRender);
+    env->ReleaseStringUTFChars(jurl, url);
+}
+
+
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_wardtn_ffmpegdemo_media_FFMediaPlayer_ANativeWindowPlay(JNIEnv *env, jobject thiz) {
+
+    if (m_VideoDecoder)
+        m_VideoDecoder->Start();
+
+}
