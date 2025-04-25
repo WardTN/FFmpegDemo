@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import com.wardtn.ffmpegdemo.base.BaseActivity
 import com.wardtn.ffmpegdemo.databinding.ActivityTestBinding
+import com.wardtn.ffmpegdemo.media.FFMediaPlayer
 import com.wardtn.ffmpegdemo.util.CommonUtils
 
 class TestActivity : BaseActivity<ActivityTestBinding>() {

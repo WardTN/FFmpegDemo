@@ -1,5 +1,6 @@
 package com.wardtn.ffmpegdemo.media
 
+import android.util.Log
 import android.view.Surface
 
 class FFMediaPlayer {
@@ -17,5 +18,11 @@ class FFMediaPlayer {
 
     external fun ANativeWindowInit(url:String, surface: Surface)
     external fun ANativeWindowPlay()
+
+
+    private fun playerEventCallback(msgType: Int, msgValue: Float) {
+       Log.d("FFMediaPlayer", "playerEventCallback: $msgType, $msgValue")
+    }
+
 
 }

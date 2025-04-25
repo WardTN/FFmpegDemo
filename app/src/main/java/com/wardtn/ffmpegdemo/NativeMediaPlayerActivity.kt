@@ -1,13 +1,10 @@
 package com.wardtn.ffmpegdemo
 
-import android.os.Bundle
 import android.os.Environment
 import android.view.SurfaceHolder
-import androidx.appcompat.app.AppCompatActivity
 import com.wardtn.ffmpegdemo.base.BaseActivity
 import com.wardtn.ffmpegdemo.databinding.ActivityNativeMediaPlayerBinding
 import com.wardtn.ffmpegdemo.media.FFMediaPlayer
-import com.wardtn.ffmpegdemo.media.MySurfaceView
 import java.io.File
 
 class NativeMediaPlayerActivity : BaseActivity<ActivityNativeMediaPlayerBinding>(),
@@ -22,6 +19,9 @@ class NativeMediaPlayerActivity : BaseActivity<ActivityNativeMediaPlayerBinding>
     override fun initView() {
         super.initView()
         databinding.surfaceView.holder.addCallback(this)
+        databinding.btnCallback.setOnClickListener {
+            mMediaPlayer?.stringFromJNI()
+        }
     }
 
 
